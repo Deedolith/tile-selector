@@ -104,8 +104,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                 <property name="label" translatable="yes">Ok</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
-                <property name="can-default">True</property>
-                <property name="has-default">True</property>
                 <property name="receives-default">True</property>
               </object>
               <packing>

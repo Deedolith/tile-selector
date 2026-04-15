@@ -49,6 +49,14 @@ class Plugin (Gimp.PlugIn):
         self.builder.add_from_file(os.path.join(path, "ui.glade"))
         self.image = None
 
+        dialog = self.builder.get_object("Dialog")
+        dialog.connect("key-press-event", self.OnKeyPress)
+
+    def OnKeyPress(self, widget, event):
+        if(event.keyval == Gtk.KEY_Return):
+            okButton = self.builder.get_object("OkButton")
+            okButton.clicked()
+
     ## GimpPlugIn virtual methods ##
     def do_query_procedures(self):
         return [ "fl-tile-selector-python" ]
@@ -80,7 +88,9 @@ class Plugin (Gimp.PlugIn):
 
             if run_mode == Gimp.RunMode.INTERACTIVE:
                 self.image = image
-                self.builder.get_object("Dialog").show()
+                dialog = self.builder.get_object("Dialog")
+                dialog.set_default_response(Gtk.ResponseType.OK)
+                dialog.show()
                 result = self.handleEvents()
         except Exception as e:
             Gimp.message("Exception: " + str(e))
@@ -151,3 +161,13 @@ class Plugin (Gimp.PlugIn):
 
 
 Gimp.main(Plugin.__gtype__, sys.argv)
+    # The code is a GIMP plugin that allows the user to select a tile of a given size in an image. The user must provide the hexadecimal address of the tile, the width and the height of the tile. The plugin will select the tile in the image. 
+    # The plugin is composed of a dialog that contains three entries (address, tile width and tile height) and two buttons (OK and Cancel). The user must provide the address of the tile in hexadecimal format. The plugin will convert the address to decimal and calculate the coordinates of the tile in the image. The plugin will select the tile in the image. 
+    # The plugin is composed of the following files: 
+    
+    # ui.glade: the Glade file that contains the dialog 
+    # tile-selector.py: the Python file that contains the plugin code 
+    
+    # The plugin is composed of the following classes: 
+    
+    # ArgsFromDict: a class that allows
